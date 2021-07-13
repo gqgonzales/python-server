@@ -160,19 +160,17 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Update a single animal from the list
         if resource == "animals":
             update_animal(id, post_body)
-            self.wfile.write("".encode())
 
         if resource == "locations":
             update_location(id, post_body)
-            self.wfile.write("".encode())
 
         if resource == "employees":
             update_employee(id, post_body)
-            self.wfile.write("".encode())
 
         if resource == "customers":
             update_customer(id, post_body)
-            self.wfile.write("".encode())
+
+        self.wfile.write("".encode())
 
     def do_DELETE(self):
         # Set a 204 response code
@@ -184,19 +182,17 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Delete a single animal from the list
         if resource == "animals":
             delete_animal(id)
-            self.wfile.write("".encode())
 
         if resource == "locations":
             delete_location(id)
-            self.wfile.write("".encode())
 
         if resource == "employees":
             delete_employee(id)
-            self.wfile.write("".encode())
 
         if resource == "customers":
             delete_customer(id)
-            self.wfile.write("".encode())
+
+        self.wfile.write("".encode())
 
 
 # This function is not inside the class. It is the starting
