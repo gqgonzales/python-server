@@ -10,9 +10,10 @@ LOCATIONS = [
         "address": "209 Armory Drive"
     },
     {
+        "id": 3,
         "name": "Antioch East",
-        "address": "7700 Fezman Way",
-        "id": 3
+        "address": "7700 Fezman Way"
+
     },
     {
         "id": 4,

@@ -5,8 +5,8 @@ ANIMALS = [
         "breed": "Goldendoodle",
         "species": "Dog",
         "status": "Admitted",
-        "locationId": 1,
-        "customerId": 1
+        "location_id": 1,
+        "customer_id": 1
     },
     {
         "id": 2,
@@ -14,8 +14,8 @@ ANIMALS = [
         "breed": "Huskey",
         "species": "Dog",
         "status": "Admitted",
-        "locationId": 2,
-        "customerId": 4
+        "location_id": 2,
+        "customer_id": 4
     },
     {
         "id": 3,
@@ -23,8 +23,8 @@ ANIMALS = [
         "breed": "Australian Shepherd",
         "status": "Admitted",
         "species": "Dog",
-        "customerId": 3,
-        "locationId": 2
+        "customer_id": 3,
+        "location_id": 2
     },
     {
         "id": 4,
@@ -32,16 +32,16 @@ ANIMALS = [
         "breed": "Huskey",
         "species": "Dog",
         "status": "Admitted",
-        "locationId": 2,
-        "customerId": 4
+        "location_id": 2,
+        "customer_id": 4
     },
     {
         "name": "Lupin",
         "breed": "Greyhound",
         "species": "Dog",
         "status": "Admitted",
-        "locationId": 1,
-        "customerId": 1,
+        "location_id": 1,
+        "customer_id": 1,
         "id": 5
     },
     {
@@ -49,8 +49,8 @@ ANIMALS = [
         "breed": "Great Dane",
         "species": "Dog",
         "status": "Admitted",
-        "locationId": 2,
-        "customerId": 1,
+        "location_id": 2,
+        "customer_id": 1,
         "id": 6
     },
     {
@@ -59,16 +59,16 @@ ANIMALS = [
         "breed": "Chihuahua",
         "species": "Dog",
         "status": "Admitted",
-        "locationId": 3,
-        "customerId": 3
+        "location_id": 3,
+        "customer_id": 3
     },
     {
         "name": "Comet",
         "breed": "Rhodesian Ridgeback",
         "species": "Dog",
         "status": "Admitted",
-        "locationId": 4,
-        "customerId": 4,
+        "location_id": 4,
+        "customer_id": 4,
         "id": 8
     }
 ]
