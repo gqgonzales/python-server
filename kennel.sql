@@ -100,9 +100,7 @@ INSERT INTO `Animal`
 VALUES (null, "Doodles", "Kennel", "Poodle", "Dog", 3, 1);
 INSERT INTO `Animal`
 VALUES (null, "Daps", "Kennel", "Boxer", "Dog", 2, 2);
-
-SELECT
-    a.id,
+SELECT a.id,
     a.name,
     a.breed,
     a.species,
@@ -111,4 +109,5 @@ SELECT
     a.customer_id
 FROM animal a
 WHERE a.id = 3
-
+INSERT INTO `Animal`
+VALUES (null, "Daps", "Kennel", "Boxer", "Dog", 2, 2);
