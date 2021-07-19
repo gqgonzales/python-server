@@ -85,11 +85,12 @@ ANIMALS = [
 
 
 def get_all_animals():
-    # Open a connection to the database
+    # Open a connection to the database, save it as conn
     with sqlite3.connect("./kennel.db") as conn:
 
-        # Just use these. It's a Black Box.
+        # The type of rows returned when we fetch
         conn.row_factory = sqlite3.Row
+        # What let's us execute queries
         db_cursor = conn.cursor()
 
         # Write the SQL query to get the information you want
@@ -129,7 +130,7 @@ def get_all_animals():
                 row["location_id"],
                 row["customer_id"],
             )
-
+            # Converting an object into a dictionary
             animals.append(animal.__dict__)
 
     # Use `json` package to properly serialize list as JSON
@@ -189,6 +190,68 @@ def get_single_animal(id):
         )
 
         return json.dumps(animal.__dict__)
+
+
+def get_animals_by_location(location_id):
+
+    with sqlite3.connect("./kennel.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        select
+            a.id,
+            a.name,
+            a.breed,
+            a.species,
+            a.status,
+            a.location_id,
+            a.customer_id
+        from Animal a
+        WHERE a.location_id = ?
+        """, (location_id, ))
+
+        animals = []
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            animal = Animal(row['id'], row['name'], row['breed'], row['species'],
+                            row['status'], row['location_id'], row['customer_id'])
+            animals.append(animal.__dict__)
+
+    return json.dumps(animals)
+
+
+def get_animals_by_status(status):
+
+    with sqlite3.connect("./kennel.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        select
+            a.id,
+            a.name,
+            a.breed,
+            a.species,
+            a.status,
+            a.location_id,
+            a.customer_id
+        from Animal a
+        WHERE a.status = ?
+        """, (status, ))
+
+        animals = []
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            animal = Animal(row['id'], row['name'], row['breed'], row['species'],
+                            row['status'], row['location_id'], row['customer_id'])
+            animals.append(animal.__dict__)
+
+    return json.dumps(animals)
 
 
 def create_animal(animal):

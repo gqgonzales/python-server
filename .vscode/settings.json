@@ -1,6 +1,5 @@
 {
     "python.linting.pylintEnabled": true,
-    "python.formatting.provider": "black",
     "sqltools.connections": [
         {
             "previewLimit": 50,

@@ -48,7 +48,7 @@ def get_all_employees():
             # Create an employee instance from the current row.
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
-            # Animal class above.
+            # Employee class above.
             employee = Employee(
                 row["id"], row["name"], row["address"], row["location_id"]
             )
@@ -93,22 +93,48 @@ def get_single_employee(id):
         return json.dumps(employee.__dict__)
 
 
-# Function with a single parameter
+def get_employees_by_location(location_id):
 
+    with sqlite3.connect("./kennel.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
 
-# def get_single_employee(id):
-#     # Variable to hold the found employee, if it exists
-#     requested_employee = None
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        select
+            e.id,
+            e.name,
+            e.address,
+            e.location_id
+        from Employee e
+        WHERE e.location_id = ?
+        """, (location_id, ))
 
-#     # Iterate the EMPLOYEES list above. Very similar to the
-#     # for..of loops you used in JavaScript.
-#     for employee in EMPLOYEES:
-#         # Dictionaries in Python use [] notation to find a key
-#         # instead of the dot notation that JavaScript used.
-#         if employee["id"] == id:
-#             requested_employee = employee
+        animals = []
+        dataset = db_cursor.fetchall()
 
-#     return requested_employee
+        for row in dataset:
+            animal = Employee(row["id"], row["name"],
+                              row["address"], row["location_id"])
+            animals.append(animal.__dict__)
+
+    return json.dumps(animals)
+
+    # Function with a single parameter
+
+    # def get_single_employee(id):
+    #     # Variable to hold the found employee, if it exists
+    #     requested_employee = None
+
+    #     # Iterate the EMPLOYEES list above. Very similar to the
+    #     # for..of loops you used in JavaScript.
+    #     for employee in EMPLOYEES:
+    #         # Dictionaries in Python use [] notation to find a key
+    #         # instead of the dot notation that JavaScript used.
+    #         if employee["id"] == id:
+    #             requested_employee = employee
+
+    #     return requested_employee
 
 
 def create_employee(employee):
