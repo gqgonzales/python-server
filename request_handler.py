@@ -1,9 +1,33 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals, get_single_animal, create_animal, delete_animal, update_animal
-from locations import get_all_locations, get_single_location, create_location, delete_location, update_location
-from employees import get_all_employees, get_single_employee, create_employee, delete_employee, update_employee
-from customers import get_all_customers, get_single_customer, create_customer, delete_customer, update_customer
+from animals import (
+    get_all_animals,
+    get_single_animal,
+    create_animal,
+    delete_animal,
+    update_animal,
+)
+from locations import (
+    get_all_locations,
+    get_single_location,
+    create_location,
+    delete_location,
+    update_location,
+)
+from employees import (
+    get_all_employees,
+    get_single_employee,
+    create_employee,
+    delete_employee,
+    update_employee,
+)
+from customers import (
+    get_all_customers,
+    get_single_customer,
+    create_customer,
+    delete_customer,
+    update_customer,
+)
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -14,8 +38,7 @@ from customers import get_all_customers, get_single_customer, create_customer, d
 class HandleRequests(BaseHTTPRequestHandler):
     # This is a Docstring it should be at the beginning of all classes and functions
     # It gives a description of the class or function
-    """Controls the functionality of any GET, PUT, POST, DELETE requests to the server
-    """
+    """Controls the functionality of any GET, PUT, POST, DELETE requests to the server"""
 
     def parse_url(self, path):
         # Just like splitting a string in JavaScript. If the
@@ -48,20 +71,19 @@ class HandleRequests(BaseHTTPRequestHandler):
             status (number): the status code to return to the front end
         """
         self.send_response(status)
-        self.send_header('Content-type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header("Content-type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
 
     # Another method! This supports requests with the OPTIONS verb.
     def do_OPTIONS(self):
-        """Sets the options headers
-        """
+        """Sets the options headers"""
         self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods',
-                         'GET, POST, PUT, DELETE')
-        self.send_header('Access-Control-Allow-Headers',
-                         'X-Requested-With, Content-Type, Accept')
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+        self.send_header(
+            "Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept"
+        )
         self.end_headers()
 
     # Here's a method on the class that overrides the parent's method.
@@ -107,10 +129,9 @@ class HandleRequests(BaseHTTPRequestHandler):
     # It handles any POST request.
 
     def do_POST(self):
-        """Handles POST requests to the server
-        """
+        """Handles POST requests to the server"""
         self._set_headers(201)
-        content_len = int(self.headers.get('content-length', 0))
+        content_len = int(self.headers.get("content-length", 0))
         post_body = self.rfile.read(content_len)
 
         # Convert JSON string to a Python dictionary
@@ -150,7 +171,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         self._set_headers(204)
-        content_len = int(self.headers.get('content-length', 0))
+        content_len = int(self.headers.get("content-length", 0))
         post_body = self.rfile.read(content_len)
         post_body = json.loads(post_body)
 
@@ -198,9 +219,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 # This function is not inside the class. It is the starting
 # point of this application.
 def main():
-    """Starts the server on port 8088 using the HandleRequests class
-    """
-    host = ''
+    """Starts the server on port 8088 using the HandleRequests class"""
+    host = ""
     port = 8088
     HTTPServer((host, port), HandleRequests).serve_forever()
 
