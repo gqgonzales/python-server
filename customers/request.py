@@ -158,7 +158,7 @@ def delete_customer(id):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        DELETE FROM animal
+        DELETE FROM customer
         WHERE id = ?
         """, (id, ))
 

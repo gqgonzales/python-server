@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Animal
+from models import Animal, Location, Customer
 
 ANIMALS = [
     {
@@ -103,8 +103,15 @@ def get_all_animals():
             a.species,
             a.status,
             a.location_id,
-            a.customer_id
-        FROM animal a
+            a.customer_id,
+            l.name location_name,
+            l.address location_address,
+            c.name customer_name,
+            c.address customer_address,
+            c.email customer_email
+        FROM Animal a
+        JOIN Location l ON l.id = a.location_id
+        JOIN Customer c ON c.id = a.customer_id
         """
         )
 
@@ -130,11 +137,26 @@ def get_all_animals():
                 row["location_id"],
                 row["customer_id"],
             )
+
+            # Create a Location instance from the current row
+            location = Location(
+                row['id'], row['location_name'], row['location_address'])
+
+            # Add the dictionary representation of the location to the animal
+            animal.location = location.__dict__
+
+            # Create a Location instance from the current row
+            customer = Customer(
+                row['id'], row['customer_name'], row['customer_address'], row['customer_email'])
+
+            # Add the dictionary representation of the location to the animal
+            animal.customer = customer.__dict__
+
             # Converting an object into a dictionary
             animals.append(animal.__dict__)
 
-    # Use `json` package to properly serialize list as JSON
-    return json.dumps(animals)
+            # Use `json` package to properly serialize list as JSON
+        return json.dumps(animals)
 
 
 # def get_single_animal(id):
@@ -169,7 +191,7 @@ def get_single_animal(id):
             a.status,
             a.location_id,
             a.customer_id
-        FROM animal a
+        FROM Animal a
         WHERE a.id = ?
         """,
             (id,),
@@ -188,8 +210,14 @@ def get_single_animal(id):
             data["location_id"],
             data["customer_id"],
         )
+        # # Create a Location instance from the current row
+        # location = Location(
+        #     data['id'], data['location_name'], data['location_address'])
 
-        return json.dumps(animal.__dict__)
+        # # Add the dictionary representation of the location to the animal
+        # animal.location = location.__dict__
+
+    return json.dumps(animal.__dict__)
 
 
 def get_animals_by_location(location_id):

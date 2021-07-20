@@ -111,3 +111,35 @@ FROM animal a
 WHERE a.id = 3
 INSERT INTO `Animal`
 VALUES (null, "Daps", "Kennel", "Boxer", "Dog", 2, 2);
+SELECT a.id,
+    a.name,
+    a.breed,
+    a.status,
+    a.location_id,
+    a.customer_id,
+    l.name location_name,
+    l.address location_address
+FROM Animal a
+    JOIN Location l ON l.id = a.location_id
+SELECT a.id,
+    a.name,
+    a.breed,
+    a.species,
+    a.status,
+    a.location_id,
+    a.customer_id,
+    l.name location_name,
+    l.address location_address,
+    c.name customer_name,
+    c.email customer_email
+FROM Animal a
+    JOIN Location l ON l.id = a.location_id
+    JOIN Customer c ON c.id = a.customer_id
+SELECT e.id,
+    e.name,
+    e.address,
+    e.location_id,
+    l.name location_name,
+    l.address location_address
+FROM Employee e
+    JOIN Location l ON l.id = e.location_id

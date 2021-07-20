@@ -100,7 +100,7 @@ def delete_location(id):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        DELETE FROM animal
+        DELETE FROM location
         WHERE id = ?
         """, (id, ))
 
