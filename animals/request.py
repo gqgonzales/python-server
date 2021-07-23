@@ -43,7 +43,7 @@ ANIMALS = [
         "name": "Lupin",
         "breed": "Greyhound",
         "species": "Dog",
-        "status": "Admitted",
+        "status": "Kennel",
         "location_id": 1,
         "customer_id": 1,
         "id": 5,
@@ -282,21 +282,45 @@ def get_animals_by_status(status):
     return json.dumps(animals)
 
 
-def create_animal(animal):
-    # Get the id value of the last animal in the list
-    max_id = ANIMALS[-1]["id"]
+def create_animal(new_animal):
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()
 
-    # Add 1 to whatever that number is
-    new_id = max_id + 1
+        db_cursor.execute("""
+        INSERT INTO Animal
+            ( name, breed, species, status, location_id, customer_id )
+        VALUES
+            ( ?, ?, ?, ?, ?, ?);
+        """, (new_animal['name'], new_animal['breed'], new_animal['species'], new_animal['status'], new_animal['location_id'], new_animal['customer_id'], ))
 
-    # Add an `id` property to the animal dictionary
-    animal["id"] = new_id
+        # The `lastrowid` property on the cursor will return
+        # the primary key of the last thing that got added to
+        # the database.
+        id = db_cursor.lastrowid
 
-    # Add the animal dictionary to the list
-    ANIMALS.append(animal)
+        # Add the `id` property to the animal dictionary that
+        # was sent by the client so that the client sees the
+        # primary key in the response.
+        new_animal['id'] = id
 
-    # Return the dictionary with `id` property added
-    return animal
+    return json.dumps(new_animal)
+
+
+# def create_animal(animal):
+#     # Get the id value of the last animal in the list
+#     max_id = ANIMALS[-1]["id"]
+
+#     # Add 1 to whatever that number is
+#     new_id = max_id + 1
+
+#     # Add an `id` property to the animal dictionary
+#     animal["id"] = new_id
+
+#     # Add the animal dictionary to the list
+#     ANIMALS.append(animal)
+
+#     # Return the dictionary with `id` property added
+#     return animal
 
 
 def delete_animal(id):
@@ -338,9 +362,13 @@ def update_animal(id, new_animal):
                 location_id = ?,
                 customer_id = ?
         WHERE id = ?
-        """, (new_animal['name'], new_animal['breed'],
-              new_animal['status'], new_animal['location_id'],
-              new_animal['customer_id'], id, ))
+        """, (new_animal['name'],
+              new_animal['breed'],
+              new_animal['species'],
+              new_animal['status'],
+              new_animal['location_id'],
+              new_animal['customer_id'],
+              id, ))
 
         # Were any rows affected?
         # Did the client send an `id` that exists?

@@ -143,3 +143,7 @@ SELECT e.id,
     l.address location_address
 FROM Employee e
     JOIN Location l ON l.id = e.location_id
+SELECT *
+FROM Animal
+ORDER BY id DESC;
+DROP TABLE IF EXISTS Animal;
